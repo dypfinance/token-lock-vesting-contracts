@@ -136,8 +136,7 @@ contract TokenLock is Ownable {
     }
     
     function extendLock(uint extendedUnlockTimestamp) external onlyOwner {
-        require(isUnlocked(), "Cannot extend lock before unlocked");
-        require(extendedUnlockTimestamp > now, "Cannot set an unlock time in past!");
+        require(extendedUnlockTimestamp > now && extendedUnlockTimestamp > unlockTime , "Cannot set an unlock time in past!");
         require(extendedUnlockTimestamp.sub(now) <= MAX_EXTENSION_ALLOWED, "Cannot extend beyond MAX_EXTENSION_ALLOWED period!");
         unlockTime = extendedUnlockTimestamp;
     }
